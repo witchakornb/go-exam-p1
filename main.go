@@ -29,7 +29,12 @@ func updateUserEmail(user *User, newEmail string) {
 // output: error (ถ้าข้อมูลไม่ถูกต้องจะ return error, ถ้าถูกต้องจะ return nil)
 // - ตรวจสอบว่า email ไม่เป็นค่าว่าง
 // - ตรวจสอบว่า age เป็นจำนวนเต็มบวก
-func validateUser(user User) error {
+//
+// validateUser checks the validity of a User object.
+// It takes a pointer to a User struct (*User) for efficiency,
+// avoiding a full struct copy on function invocation, which is beneficial
+// especially for larger structs.
+func validateUser(user *User) error {
 	if user.Email == "" {
 		return fmt.Errorf("email cannot be empty")
 	}
@@ -65,7 +70,7 @@ func main() {
 	// output: error (ถ้าข้อมูลไม่ถูกต้องจะ return error, ถ้าถูกต้องจะ return nil)
 	// - ตรวจสอบว่า email ไม่เป็นค่าว่าง
 	// - ตรวจสอบว่า age เป็นจำนวนเต็มบวก
-	if err := validateUser(user); err != nil {
+	if err := validateUser(&user); err != nil {
 		// ถ้าการตรวจสอบล้มเหลว แสดงข้อความ error
 		fmt.Println("Validation error:", err)
 	} else {
